@@ -254,19 +254,55 @@ h3 {
 .badge.veneno { background-color: #b97fc9; }
 .badge.fuego { background-color: #fd7d24; }
 .badge.hielo { background-color: #51c4e7; }
-.badge.tierra { background-color: #724015; }
-.badge.roca { background-color: #9a9a9a; }
-.badge.agua { background-color: #2e4fbc; }
+.badge.tierra { background-color: #693333; }
+.badge.roca { background-color: #c97e71; }
+.badge.agua { background-color: #00c3ff; }
+.badge.normal { background-color: #a4a4a4;}
+.badge.hada { background-color: #97297f;}
+.badge.acero { background-color: #635e5e;}
+.badge.electrico { background-color: #fbff00;}
+.badge.lucha { background-color: #bb1c1c;}
+.badge.psiquico { background-color: #972259;}
+.badge.fantasma { background-color: #a4a4a4;}
+.badge.siniestro { background-color: #381b38;}
+
+
+
+
 
 .badge.volador { 
     background: linear-gradient(180deg, #3dc7ef 50%, #bdb9b8 50%); 
     /* El tipo volador suele tener dos colores, o se puede usar un gris/azul sólido */
 }
-.badge.psiquico { background-color: #f366b9; }
+.badge.psíquico { background-color: #f366b9; }
 
 /* Responsive para móvil */
 @media (max-width: 768px) {
     .pokedex-container {
         flex-direction: column;
+    }
+}
+
+#pokedex {
+    display: flex;
+    flex-direction: row;
+}
+
+#pokedex-lista{
+    padding: 10px;
+
+    ul {
+        list-style: none;
+    }
+
+    li {
+        cursor: pointer;
+        margin: 5px;
+        padding: 10px;
+        background-color: lightgrey;
+    }
+
+    .active {
+        background-color: crimson;
     }
 }

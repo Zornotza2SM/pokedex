@@ -1,33 +1,70 @@
+
+
 // MODELOA
 
-let pokemon = {
-    "id": 4,
-    "name": "Charmander",
-    "description": "La llama de la punta de su cola indica su salud. Si está sano, arderá con intensidad.",
-    "image": "charmander.png",
-    "altura": 0.6,
-    "categoria": "Lagarto",
-    "peso": 8.5,
-    "habilidad": "Mar Llamas",
-    "types": ["fuego"],
-    "debilidades": ["agua", "tierra", "roca"],
-    "stats": {
-      "ps": 39,
-      "ataque": 52,
-      "defensa": 43,
-      "ataque_especial": 60,
-      "defensa_especial": 50,
-      "velocidad": 65
-    }
-  };
+let pokedex;
+let pokemon;
+let num = 0;
 
+async function init(){
+
+    pokedex = await fetch ("assets/pokedex.json")
+        .then(response => response.json())
+
+    pokemon = pokedex[0]
+
+
+    //Deitu vista lehenengo aldiz
+    view()
+}
+
+function view(){
+    
+    listaView()
+    pokemonView()
+
+    setTimeout(()=> {
+        if(num<9){
+            num++;
+        }else{
+            num=0;
+        }
+        cambiarPokemonIndex(num);  
+    }, 1000);
+
+}
+
+function listaView(){
+    document.getElementById("pokedex-lista").innerHTML =
+
+    `<ul>
+        ${pokedex.map(poke => `<li 
+            
+            class="${poke.name == pokemon.name ? "active" : ""}">
+            
+            ${poke.name}
+            
+            </li>` ).join("")}
+    <ul>
+    `
+}
+
+function cambiarPokemonNombre(name){
+    pokemon = pokedex.find(poke => poke.name == name)
+    view();
+}
+function cambiarPokemonIndex(num){
+    pokemon = pokedex[num]
+    view()
+}
 
 /// VISTA
 
-function pokemonView(){
+function pokemonView() {
 
     document.getElementById("pokemon-view").innerHTML = `
     
+
     <div class="left-column">
         <div class="pokemon-image-wrapper">
             <img src="assets/images/${pokemon.image}" alt="${pokemon.name}" class="pokemon-img">
@@ -53,7 +90,7 @@ function pokemonView(){
 
                 <div class="stat-col">
                     <div class="bar-track">
-                        <div class="bar-fill" style="height: ${pokemon.stats.defensa}%;"></div>
+                        <div class="bar-fill" style="height: ${pokemon.stats.defensa_especial}%;"></div>
                         <div class="bar-grid"></div>
                     </div>
                     <span class="label">Defensa</span>
@@ -69,7 +106,7 @@ function pokemonView(){
 
                 <div class="stat-col">
                     <div class="bar-track">
-                        <div class="bar-fill" style="height: ${pokemon.stats.defensa_especial}%;"></div>
+                        <div class="bar-fill" style="height: ${pokemon.stats.defensa}%;"></div>
                         <div class="bar-grid"></div>
                     </div>
                     <span class="label">Defensa Especial</span>
@@ -95,7 +132,7 @@ function pokemonView(){
             <div class="info-row">
                 <div class="info-item">
                     <span class="info-label">Altura</span>
-                    <span class="info-value">${pokemon.altura} m</span>
+                    <span class="info-value">${pokemon.altura}</span>
                 </div>
                 <div class="info-item">
                     <span class="info-label">Categoría</span>
@@ -106,7 +143,7 @@ function pokemonView(){
             <div class="info-row">
                 <div class="info-item">
                     <span class="info-label">Peso</span>
-                    <span class="info-value">${pokemon.peso} kg</span>
+                    <span class="info-value">${pokemon.peso}</span>
                 </div>
                 <div class="info-item">
                     <span class="info-label">Habilidad</span>
@@ -128,6 +165,7 @@ function pokemonView(){
         <div class="type-section">
             <h3>Tipo</h3>
             <div class="badges">
+                
                 ${vistaTipos(pokemon.types)}
             </div>
         </div>
@@ -135,18 +173,22 @@ function pokemonView(){
         <div class="weakness-section">
             <h3>Debilidad</h3>
             <div class="badges">
-                ${vistaTipos(pokemon.debilidades)}
+            ${vistaTipos (pokemon.debilidades)}
             </div>
         </div>
     </div>
 
+</div>
     `
-    
+
 }
 
 // Deitu vista lehenengo aldiz
-pokemonView()
 
-function vistaTipos(types){
-   return types.map(tipo => `<span class="badge ${tipo}">${tipo}</span>`).join("")
+
+function vistaTipos(types) {
+
+   return types.map(t =>  `<span class="badge ${t}">${t} </span>`).join("")
 }
+
+init()
